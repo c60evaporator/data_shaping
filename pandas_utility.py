@@ -29,7 +29,7 @@ def grby_rename_agg(df: pd.DataFrame, grby_keys: List[str], agg_dict: Dict[str, 
         Exception('values of agg_dict must be str or list[str]')
     return df_grby
 
-def grby_merge_agg(df: pd.DataFrame, keys: List[str], agg_dict: Dict[str, List[str]]) -> pd.DataFrame:
+def grby_merge_agg(df: pd.DataFrame, grby_keys: List[str], agg_dict: Dict[str, List[str]]) -> pd.DataFrame:
     """
     グルーピングしてagg集計した結果を元のデータフレームに結合（フィールド名はaggで指定した処理を追加してリネーム）
 
@@ -42,6 +42,6 @@ def grby_merge_agg(df: pd.DataFrame, keys: List[str], agg_dict: Dict[str, List[s
     agg_dict: Dict[str, List[str]]
         agg集計内容を表すDict（使用法はgroupby集計のaggと同じ）
     """
-    df_grby = grby_rename_agg(df, keys, agg_dict)
-    df_merge = pd.merge(df, df_grby, left_on=keys, right_index=True, how='left')
+    df_grby = grby_rename_agg(df, grby_keys, agg_dict)
+    df_merge = pd.merge(df, df_grby, left_on=grby_keys, right_index=True, how='left')
     return df_merge
